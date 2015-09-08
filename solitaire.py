@@ -37,8 +37,7 @@ class Player:
     
     def takeTurn(self):
         move = raw_input("What is your move")
-        
-        # Do something with move
+        return move
 
 class Card:
     def __init__(self, number, suit):
@@ -95,7 +94,8 @@ class GameOfSolitaire:
         self.__player = Player()
         self.__deck = Deck(shuffle=True)
         self.__stacks = [] #Piles of cards
-
+        self.done = False
+        
         for i in range(1,8): #[1..7]
             stack = Stack(i)
             for j in range(i):
@@ -105,13 +105,26 @@ class GameOfSolitaire:
         
     def play(self):
         write("------- Playing ------", "red")
-        self.visualize()
+        
+        while not self.done:
+            turn = self.__player.takeTurn()
+            #Deal With Turn
+            
+            self.visualize()
+            
+            if self.hasWon():
+                self.done = True
+
         
     def visualize(self):
         for stack in self.__stacks:
             stack.visualize()
             
             
+    def hasWon(self):
+        #Return if Won
+        return False
+        
 playing = True
 
 if playing:
